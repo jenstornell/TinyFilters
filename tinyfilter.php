@@ -28,7 +28,7 @@ class TinyFilter {
     return false;
   }
 
-  function addValidator($object) {
+  function addValidators($object) {
     $this->validators[] = $object;
     /*print_r($this->validators);
     print_r($object);

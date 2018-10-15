@@ -160,7 +160,7 @@ class CustomValidators {
 
 $CustomValidators = new CustomValidators();
 
-$filter->addValidator($CustomValidators);
+$filter->addValidators($CustomValidators);
 $filter->add('first', 'test', 'hello');
 $array = [
   'first' => 'hello'
