@@ -35,9 +35,47 @@ $results = $filter->validate($array);
 var_dump($results);
 ```
 
+## Advanced example
+
+A more advanced example. If page `root` is not equal to `true`, remove the page from the array.
+
+```php
+$filter->add('root', '!equals', true);
+
+$pages = [
+  'home' => [
+    'title' => 'Home',
+    'root' => true
+  ],
+  'about' => [
+    'title' => 'About',
+  ],
+];
+
+foreach($pages as $page => $array) {
+  if($filter->validate($array)) unset($pages[$page]);
+}
+
+print_r($pages);
+```
+
+**The code above will give:**
+
+```php
+$pages = [
+  'home' => [
+    'title' => 'Home',
+    'root' => true
+  ],
+];
+```
+
 ## Validators
 
 There are some built in validators that can be used.
+
+- Before the examples below you need `$filter = new TinyFilter();`. 
+- After the examples below you need `$results = $filter->validate($array);`.
 
 ### in
 

@@ -209,4 +209,27 @@ $array = [
 
 if(!$filter->validate($array)) $issues[] = 'Custom validators';
 
+$filter->reset();
+
+// Nested
+$filter->add('root', '!equals', true);
+
+$pages = [
+  'home' => [
+    'title' => 'Home',
+    'root' => true
+  ],
+  'about' => [
+    'title' => 'About',
+  ],
+];
+
+foreach($pages as $page => $array) {
+  if($filter->validate($array)) unset($pages[$page]);
+}
+
+if(!isset($pages['home']) || isset($pages['about'])) $issues[] = 'Associative';
+
+$filter->reset();
+
 print_r($issues);

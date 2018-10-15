@@ -1,7 +1,7 @@
 <?php
 class TinyFilter {
-  #public $validators;
   public $settings;
+  public $validators;
 
   function __construct() {
     $this->validators[] = new TinyValidators();
@@ -30,14 +30,6 @@ class TinyFilter {
 
   function addValidators($object) {
     $this->validators[] = $object;
-    /*print_r($this->validators);
-    print_r($object);
-
-    echo $object->test(1,2);
-
-    $merged = (object)array_merge((array) $this->Validators, (array)$object);
-
-    print_r($merged->test());*/
   }
 
   function validator($args) {
