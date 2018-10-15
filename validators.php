@@ -35,7 +35,32 @@ class TinyValidators {
   // In array
   function in($array, $key, $value) {
     if(!$this->exists($array, $key)) return false;
-    if(!is_array($array[$key])) return false;
+    if(!$this->isArray($array, $key)) return false;
     return in_array($value, $array[$key]);
+  }
+
+  // Is array
+  function isArray($array, $key) {
+    if(!$this->exists($array, $key)) return false;
+    return is_array($array[$key]);
+  }
+
+  // Contains
+  function contains($array, $key, $value) {
+    if(!$this->exists($array, $key)) return false;
+    
+    if(strpos($array[$key], $value) !== false) return true;
+    return false;
+  }
+
+  // Between
+  function between($array, $key, $params) {
+    if(!$this->exists($array, $key)) return false;
+
+    $min = $this->min($array, $key, $params[0]);
+    $max = $this->max($array, $key, $params[1]);
+
+    if($min && $max) return true;
+    return false;
   }
 }

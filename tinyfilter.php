@@ -1,20 +1,24 @@
 <?php
 class TinyFilter {
-  public $validators;
+  #public $validators;
   public $settings;
 
   function __construct() {
-    $this->Validators = new TinyValidators();
+    $this->validators[] = new TinyValidators();
   }
   function validate($array) {
     if(isset($this->settings)) {
       foreach($this->settings as $key => $items) {
         foreach($items as $args) {
-          $validator = $this->validator($args);
-          $positive = $this->positive($validator, $args);
+          $validator_name = $this->validator($args);
+          $positive = $this->positive($validator_name, $args);
           
-          $result = $this->Validators->{$validator}($array, $key, $args['args']);
-          $result = $positive ? $result : !$result;
+          foreach($this->validators as $validator) {
+            if(!method_exists($validator, $validator_name)) continue;
+
+            $result = $validator->{$validator_name}($array, $key, $args['args']);
+            $result = $positive ? $result : !$result;
+          }
 
           if(!$result) return false;
         }
@@ -22,6 +26,18 @@ class TinyFilter {
       return true;
     }
     return false;
+  }
+
+  function addValidator($object) {
+    $this->validators[] = $object;
+    /*print_r($this->validators);
+    print_r($object);
+
+    echo $object->test(1,2);
+
+    $merged = (object)array_merge((array) $this->Validators, (array)$object);
+
+    print_r($merged->test());*/
   }
 
   function validator($args) {

@@ -143,6 +143,30 @@ $array = [
 
 *The code above will give `true`*
 
+## Custom validators
+
+To create custom validators you need to create a class
+
+```php
+class CustomValidators {
+  function test($array, $key, $value) {
+    return ($array[$key] == $value);
+  }
+
+  function another($array, $key, $value) {
+    return true;
+  }
+}
+
+$CustomValidators = new CustomValidators();
+
+$filter->addValidator($CustomValidators);
+$filter->add('first', 'test', 'hello');
+$array = [
+  'first' => 'hello'
+];
+```
+
 ## Donate
 
 Donate to [DevoneraAB](https://www.paypal.me/DevoneraAB) if you want.

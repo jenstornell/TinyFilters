@@ -20,7 +20,7 @@ if(!$filter->validate($array)) $issues[] = 'Multiple - Should be positive';
 // Multiple negative
 $array = [
   'first' => 'aaa',
-  'second' => 'ccc',
+  'second' => 'bbb',
 ];
 if($filter->validate($array)) $issues[] = 'Multiple - Should be negative';
 
@@ -92,6 +92,19 @@ $array = [
 if(!$filter->validate($array)) $issues[] = 'isString';
 $filter->reset();
 
+// isArray
+$filter->add('first', 'isArray');
+$filter->add('second', 'isArray');
+$filter->add('third', '!isArray');
+$filter->add('fourth', '!isArray');
+$array = [
+  'first' => ['hello' => 'world'],
+  'second' => [],
+  'third' => false,
+];
+if(!$filter->validate($array)) $issues[] = 'isArray';
+$filter->reset();
+
 // isNumber
 $filter->add('first', 'isNumber');
 $filter->add('second', 'isNumber');
@@ -137,6 +150,24 @@ $array = [
 if(!$filter->validate($array)) $issues[] = 'min';
 $filter->reset();
 
+// between
+$filter->add('first', 'between', [100, 200]);
+$filter->add('second', 'between', [100, 200]);
+$filter->add('third', 'between', [100, 200]);
+$filter->add('fourth', '!between', [100, 200]);
+$filter->add('fifth', '!between', [100, 200]);
+$filter->add('sixth', '!between', [100, 200]);
+$array = [
+  'first' => 150,
+  'second' => 100,
+  'third' => 200,
+  'fourth' => 201,
+  'fifth' => 49,
+  'sixth' => false,
+];
+if(!$filter->validate($array)) $issues[] = 'between';
+$filter->reset();
+
 // in
 $filter->add('first', '!in', 'hello');
 $filter->add('second', 'in', 'hello');
@@ -148,5 +179,34 @@ $array = [
 ];
 if(!$filter->validate($array)) $issues[] = 'in';
 $filter->reset();
+
+// Contains
+$filter->add('first', 'contains', 'ello');
+$filter->add('second', 'contains', 'ello');
+$filter->add('third', '!contains', 'ello');
+$array = [
+  'first' => 'hello',
+  'second' => 'ello',
+  'third' => 'world',
+];
+if(!$filter->validate($array)) $issues[] = 'contains';
+$filter->reset();
+
+// Custom Validators
+class CustomValidators {
+  function test($array, $key, $value) {
+    return ($array[$key] == $value);
+  }
+}
+
+$CustomValidators = new CustomValidators();
+
+$filter->addValidator($CustomValidators);
+$filter->add('first', 'test', 'hello');
+$array = [
+  'first' => 'hello'
+];
+
+if(!$filter->validate($array)) $issues[] = 'Custom validators';
 
 print_r($issues);
