@@ -10,7 +10,7 @@ TinyFilter is perhaps the smallest PHP filter library on earth. Still packed wit
 - Only 2 files needs to be included.
 - Really simple syntax.
 - Made for large nested arrays in mind.
-- Add custom validators.
+- Add your own custom validators, or use the default ones.
 
 ## Setup
 
@@ -21,19 +21,14 @@ include __DIR__ . '/validators.php';
 
 ## Basic usage
 
-1. Create an object from the `TinyFilter` class
-1. Add filter rules
-1. Add a associative array with key/value pairs
-1. Validate if the result is `true` or `false`
-
 ```php
 $filter = new TinyFilter();
 
-$filter->add('first', 'between', [0, 100];
-$filter->add('first', 'equals', 50;
+$filter->add('first',  'between', [0, 100];
+$filter->add('first',  'equals',  50;
 $filter->add('second', 'isString');
 
-$array['first'] = 50;
+$array['first']  = 50;
 $array['second'] = 'Hello world';
 
 var_dump($filter->validate($array));
@@ -46,14 +41,12 @@ A more advanced example. If page `root` is not equal to `true`, remove the page 
 ```php
 $filter->add('root', '!equals', true);
 
-$pages = [
-  'home' => [
-    'title' => 'Home',
-    'root' => true
-  ],
-  'about' => [
-    'title' => 'About',
-  ],
+$pages['home'] = [
+  'title' => 'Home',
+  'root'  => true
+];
+$pages['about'] = [
+  'title' => 'About'
 ];
 
 foreach($pages as $page => $array) {
@@ -69,7 +62,7 @@ print_r($pages);
 $pages = [
   'home' => [
     'title' => 'Home',
-    'root' => true
+    'root'  => true
   ],
 ];
 ```
