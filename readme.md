@@ -41,16 +41,19 @@ A more advanced example. If page `root` is not equal to `true`, remove the page 
 ```php
 $filter->add('root', '!equals', true);
 
-$pages['home'] = [
-  'title' => 'Home',
-  'root'  => true
-];
-$pages['about'] = [
-  'title' => 'About'
+$pages = [
+  'home' => [
+    'title' => 'Home',
+    'root'  => true
+  ],
+  'about' => [
+    'title' => 'About'
+  ]
 ];
 
 foreach($pages as $page => $array) {
-  if($filter->validate($array)) unset($pages[$page]);
+  if($filter->validate($array))
+    unset($pages[$page]);
 }
 
 print_r($pages);
