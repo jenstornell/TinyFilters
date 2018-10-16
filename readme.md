@@ -96,7 +96,6 @@ It will return `true` if the array key is not `null`.
 $filter->add('my_key', 'exists');
 
 $array['my_key'] = false;
-];
 ```
 
 ### equals
@@ -107,7 +106,6 @@ It will return `true` if an equal match is found. It also needs to be of equal t
 $filter->add('my_key', 'equals', 'hello');
 
 $array['my_key'] = 'hello';
-];
 ```
 
 ### isString
@@ -118,7 +116,6 @@ It will return `true` if the value is a string.
 $filter->add('my_key', 'isString');
 
 $array['my_key'] = 'hello';
-];
 ```
 
 ### isNumber
@@ -129,7 +126,6 @@ It will return `true` if the value is a number and an integer.
 $filter->add('my_key', 'isNumber');
 
 $array['my_key'] = 100;
-];
 ```
 
 ### min
@@ -140,7 +136,6 @@ It will return `true` if the value is larger than the third argument.
 $filter->add('my_key', 'min', 10);
 
 $array['my_key'] = 100;
-];
 ```
 
 ### max
