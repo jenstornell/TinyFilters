@@ -76,6 +76,7 @@ There are some built in validators that can be used.
 
 - Before the examples below you need `$filter = new TinyFilter();`. 
 - After the examples below you need `$results = $filter->validate($array);`.
+- All the examples below will return `true`.
 
 ### in
 
@@ -88,8 +89,6 @@ $array = [
 ];
 ```
 
-*The code above will give `true`*
-
 ### exists
 
 It will return `true` if the array key is not `null`.
@@ -100,8 +99,6 @@ $array = [
   'my_key' => false
 ];
 ```
-
-*The code above will give `true`*
 
 ### equals
 
@@ -114,8 +111,6 @@ $array = [
 ];
 ```
 
-*The code above will give `true`*
-
 ### isString
 
 It will return `true` if the value is a string.
@@ -126,8 +121,6 @@ $array = [
   'my_key' => 'hello'
 ];
 ```
-
-*The code above will give `true`*
 
 ### isNumber
 
@@ -140,8 +133,6 @@ $array = [
 ];
 ```
 
-*The code above will give `true`*
-
 ### min
 
 It will return `true` if the value is larger than the third argument.
@@ -153,8 +144,6 @@ $array = [
 ];
 ```
 
-*The code above will give `true`*
-
 ### max
 
 It will return `true` if the value is smaller than the third argument.
@@ -165,8 +154,6 @@ $array = [
   'my_key' => 10
 ];
 ```
-
-*The code above will give `true`*
 
 ## Custom validators
 
