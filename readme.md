@@ -76,7 +76,7 @@ There are some built in validators that can be used.
 
 - Before the examples below you need `$filter = new TinyFilter();`. 
 - After the examples below you need `$results = $filter->validate($array);`.
-- All the examples below will return `true`.
+- All the examples below will return `true` from the `$results`.
 
 ### in
 
