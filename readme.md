@@ -4,6 +4,14 @@
 
 TinyFilter is perhaps the smallest PHP filter library on earth. Still packed with features.
 
+## Why another filter/validator library?
+
+- A very small library, yet powerful.
+- Only 2 files needs to be included.
+- Really simple syntax.
+- Made for large nested arrays in mind.
+- Add custom validators.
+
 ## Setup
 
 ```php
@@ -21,18 +29,14 @@ include __DIR__ . '/validators.php';
 ```php
 $filter = new TinyFilter();
 
-$filter->add('first', 'min', 0);
-$filter->add('first', 'max', 100);
+$filter->add('first', 'between', [0, 100];
+$filter->add('first', 'equals', 50;
 $filter->add('second', 'isString');
 
-$array = [
-  'first' => 50,
-  'second' => 'Hello world'
-];
+$array['first'] = 50;
+$array['second'] = 'Hello world';
 
-$results = $filter->validate($array);
-
-var_dump($results);
+var_dump($filter->validate($array));
 ```
 
 ## Advanced example
@@ -90,22 +94,9 @@ $array = [
 
 *The code above will give `true`*
 
-### has
-
-It will check if the array key exists in the array.
-
-```php
-$filter->add('my_key', 'has');
-$array = [
-  'my_key' => 'something'
-];
-```
-
-*The code above will give `true`*
-
 ### exists
 
-It will return `true` if the array key is not `null`, else it will return `false`. It will also return `false` if the key does not exists.
+It will return `true` if the array key is not `null`.
 
 ```php
 $filter->add('my_key', 'exists');
@@ -187,11 +178,11 @@ To create custom validators you need to create a class
 
 ```php
 class CustomValidators {
-  function test($array, $key, $value) {
-    return ($array[$key] == $value);
+  function test($value, $match) {
+    return $value == $match;
   }
 
-  function another($array, $key, $value) {
+  function another($value, $match) {
     return true;
   }
 }
@@ -219,4 +210,4 @@ Donate to [DevoneraAB](https://www.paypal.me/DevoneraAB) if you want.
 
 ## License
 
-MIT
+[MIT](license)

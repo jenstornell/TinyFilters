@@ -4,7 +4,7 @@ class TinyFilter {
   public $validators;
 
   function __construct() {
-    $this->validators[] = new TinyValidators();
+    $this->validators['default'] = new TinyValidators();
   }
   function validate($array) {
     if(isset($this->settings)) {
@@ -12,11 +12,13 @@ class TinyFilter {
         foreach($items as $args) {
           $validator_name = $this->validator($args);
           $positive = $this->positive($validator_name, $args);
+
+          if(!$this->validators['default']->has($array, $key)) continue;
           
           foreach($this->validators as $validator) {
             if(!method_exists($validator, $validator_name)) continue;
 
-            $result = $validator->{$validator_name}($array, $key, $args['args']);
+            $result = $validator->{$validator_name}($array[$key], $args['args']);
             $result = $positive ? $result : !$result;
           }
 

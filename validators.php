@@ -1,66 +1,52 @@
 <?php
 class TinyValidators {
   function has($array, $key) {
-    return array_key_exists($key, $array);
+    return !is_array($array) ? false : array_key_exists($key, $array);
   }
-  function exists($array, $key) {
-    if(!$this->has($array, $key)) return false;
-    return $array[$key] !== null;
+  function exists($value) {
+    return $value !== null;
   }
-  function equals($array, $key, $value) {
-    $array[$key] = isset($array[$key]) ? $array[$key] : null;
-    return $array[$key] === $value;
+  function equals($value, $match) {
+    return $value === $match;
   }
 
   // Is
-  function isString($array, $key) {
-    if(!$this->exists($array, $key)) return false;
-    return is_string($array[$key]);
+  function isString($value) {
+    return is_string($value);
   }
-  function isNumber($array, $key) {
-    if(!$this->exists($array, $key)) return false;
-    return gettype($array[$key]) === 'integer';
+  function isNumber($value) {
+    return gettype($value) === 'integer';
   }
 
   // Max min
-  function max($array, $key, $value) {
-    if(!$this->isNumber($array, $key)) return false;
-    return ($array[$key] <= $value);
+  function max($value, $match) {
+    return !is_numeric($value) ? false : (int)$value <= $match;
   }
-  function min($array, $key, $value) {
-    if(!$this->isNumber($array, $key)) return false;
-    return ($array[$key] >= $value);
+  function min($value, $match) {
+    return !is_numeric($value) ? false : (int)$value >= $match;
   }
 
   // In array
-  function in($array, $key, $value) {
-    if(!$this->exists($array, $key)) return false;
-    if(!$this->isArray($array, $key)) return false;
-    return in_array($value, $array[$key]);
+  function in($value, $match) {
+    if(!$this->isArray($value)) return false;
+    return in_array($match, $value);
   }
 
   // Is array
-  function isArray($array, $key) {
-    if(!$this->exists($array, $key)) return false;
-    return is_array($array[$key]);
+  function isArray($value) {
+    return is_array($value);
   }
 
   // Contains
-  function contains($array, $key, $value) {
-    if(!$this->exists($array, $key)) return false;
-    
-    if(strpos($array[$key], $value) !== false) return true;
-    return false;
+  function contains($value, $match) {
+    return strpos($value, $match) !== false ? true : false;
   }
 
   // Between
-  function between($array, $key, $params) {
-    if(!$this->exists($array, $key)) return false;
+  function between($value, $match) {
+    $min = $this->min($value, $match[0]);
+    $max = $this->max($value, $match[1]);
 
-    $min = $this->min($array, $key, $params[0]);
-    $max = $this->max($array, $key, $params[1]);
-
-    if($min && $max) return true;
-    return false;
+    return ($min && $max) ? true : false;
   }
 }

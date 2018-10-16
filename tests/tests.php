@@ -37,7 +37,7 @@ if($filter->validate($array)) $issues[] = 'Reset';
 $filter = new TinyFilter();
 
 // Has
-$filter->add('first', 'has');
+/*$filter->add('first', 'has');
 $filter->add('second', 'has');
 //$filter->add('third', '!has');
 $array = [
@@ -45,7 +45,7 @@ $array = [
   'second' => null,
 ];
 if(!$filter->validate($array)) $issues[] = 'Has';
-$filter->reset();
+$filter->reset();*/
 
 // Exists
 $filter->add('first', 'exists');
@@ -194,8 +194,8 @@ $filter->reset();
 
 // Custom Validators
 class CustomValidators {
-  function test($array, $key, $value) {
-    return ($array[$key] == $value);
+  function test($value, $match) {
+    return $value == $match;
   }
 }
 
