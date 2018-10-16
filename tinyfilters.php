@@ -1,5 +1,5 @@
 <?php
-class TinyFilter {
+class TinyFilters {
   public $settings;
   public $validators;
 

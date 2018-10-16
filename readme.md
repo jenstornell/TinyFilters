@@ -1,8 +1,8 @@
-# TinyFilter
+# TinyFilters
 
 *Version: 1.0*
 
-TinyFilter is perhaps the smallest PHP filter library on earth. Still packed with features.
+TinyFilters is perhaps the smallest PHP filter library on earth. Still packed with features.
 
 ## Why another filter/validator library?
 
@@ -15,14 +15,14 @@ TinyFilter is perhaps the smallest PHP filter library on earth. Still packed wit
 ## Setup
 
 ```php
-include __DIR__ . '/tinyfilter.php';
+include __DIR__ . '/tinyfilters.php';
 include __DIR__ . '/validators.php';
 ```
 
 ## Basic usage
 
 ```php
-$filter = new TinyFilter();
+$filter = new TinyFilters();
 
 $filter->add('first',  'between', [0, 100];
 $filter->add('first',  'equals',  50;
@@ -74,7 +74,7 @@ $pages = [
 
 There are some built in validators that can be used.
 
-- Before the examples below you need `$filter = new TinyFilter();`. 
+- Before the examples below you need `$filter = new TinyFilters();`. 
 - After the examples below you need `$results = $filter->validate($array);`.
 - All the examples below will return `true` from the `$results`.
 

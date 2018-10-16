@@ -3,7 +3,7 @@ $issues = [];
 
 // Multiple
 // Multiple keys
-$filter = new TinyFilter();
+$filter = new TinyFilters();
 $filter->add('first', 'isString');
 $filter->add('first', 'equals', 'aaa');
 $filter->add('second', 'isString');
@@ -25,7 +25,7 @@ $array = [
 if($filter->validate($array)) $issues[] = 'Multiple - Should be negative';
 
 // Reset
-$filter = new TinyFilter();
+$filter = new TinyFilters();
 $filter->add('first', 'isString');
 $filter->reset();
 $array = [
@@ -34,7 +34,7 @@ $array = [
 if($filter->validate($array)) $issues[] = 'Reset';
 
 // VALIDATORS
-$filter = new TinyFilter();
+$filter = new TinyFilters();
 
 // Has
 /*$filter->add('first', 'has');
