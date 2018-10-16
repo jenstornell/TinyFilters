@@ -84,6 +84,7 @@ The `in` validator takes a string as third argument and tries to find a match in
 
 ```php
 $filter->add('my_key', 'in', 'world');
+
 $array = [
   'my_key' => ['hello', 'world']
 ];
@@ -95,6 +96,7 @@ It will return `true` if the array key is not `null`.
 
 ```php
 $filter->add('my_key', 'exists');
+
 $array = [
   'my_key' => false
 ];
@@ -106,6 +108,7 @@ It will return `true` if an equal match is found. It also needs to be of equal t
 
 ```php
 $filter->add('my_key', 'equals', 'hello');
+
 $array = [
   'my_key' => 'hello'
 ];
@@ -117,6 +120,7 @@ It will return `true` if the value is a string.
 
 ```php
 $filter->add('my_key', 'isString');
+
 $array = [
   'my_key' => 'hello'
 ];
@@ -128,6 +132,7 @@ It will return `true` if the value is a number and an integer.
 
 ```php
 $filter->add('my_key', 'isNumber');
+
 $array = [
   'my_key' => 100
 ];
@@ -139,6 +144,7 @@ It will return `true` if the value is larger than the third argument.
 
 ```php
 $filter->add('my_key', 'min', 10);
+
 $array = [
   'my_key' => 100
 ];
@@ -150,6 +156,7 @@ It will return `true` if the value is smaller than the third argument.
 
 ```php
 $filter->add('my_key', 'max', 100);
+
 $array = [
   'my_key' => 10
 ];
@@ -173,7 +180,9 @@ class CustomValidators {
 $CustomValidators = new CustomValidators();
 
 $filter->addValidators($CustomValidators);
+
 $filter->add('first', 'test', 'hello');
+
 $array = [
   'first' => 'hello'
 ];
