@@ -26,6 +26,11 @@ class TinyValidators {
     return !is_numeric($value) ? false : (int)$value >= $match;
   }
 
+  // Returns true
+  function returnTrue() {
+    return true;
+  }
+
   // In array
   function in($value, $match) {
     if(!$this->isArray($value)) return false;

@@ -25,7 +25,7 @@ class TinyFilters {
           if(!$result) return false;
         }
       }
-      return true;
+      return !isset($result) ? false : true;
     }
     return false;
   }
