@@ -11,40 +11,34 @@ class TinyFilters {
     if(isset($this->settings)) {
       foreach($this->settings as $key => $items) {
         foreach($items as $settings) {
-          $vname = $this->validator($settings);
-
-          if(!$this->validators['default']->has($key, $array)) {
-            $result = $this->invert($result, $vname, $settings);
-            continue;
+          if($this->validators['default']->has($key, $array, $settings['positive'])) {
+            foreach($this->validators as $validator) {
+              if(method_exists($validator, $settings['vname'])) {
+                $result = $validator->{$settings['vname']}($array[$key], $settings['args']);
+              }
+            } 
           }
-          
-          foreach($this->validators as $validator) {
-            if(!method_exists($validator, $vname)) continue;
-
-            $result = $validator->{$vname}($array[$key], $settings['args']);
-          }
-
-          $result = $this->invert($result, $vname, $settings);
+          return $this->invert($result, $settings);
         }
       }
     }
     return $result;
   }
 
-  function invert($result, $vname, $settings) {
-    return $this->positive($vname, $settings) ? $result : !$result;
+  function invert($result, $settings) {
+    return $settings['positive'] ? $result : !$result;
   }
 
   function addValidators($object) {
     $this->validators[] = $object;
   }
 
-  function validator($args) {
-    return strtok($args['validator'], '!');
+  function vname($validator) {
+    return strtok($validator, '!');
   }
 
-  function positive($validator, $args) {
-    return $validator === $args['validator'];
+  function positive($validator, $vname) {
+    return $validator === $vname;
   }
 
   function add($key, $validator = null, $args = null) {
@@ -56,9 +50,12 @@ class TinyFilters {
   }
 
   function addSingle($key, $validator, $args) {
+    $vname = $this->vname($validator);
+
     $this->settings[$key][] = [
       'key' => $key,
-      'validator' => $validator,
+      'vname' => $vname,
+      'positive' => $this->positive($validator, $vname),
       'args' => $args,
     ];
   }

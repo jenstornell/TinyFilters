@@ -1,6 +1,5 @@
 <?php
 $issues = [];
-/*
 
 // Multiple
 // Multiple keys
@@ -17,13 +16,6 @@ $array = [
 ];
 
 if(!$filter->validate($array)) $issues[] = 'Multiple - Should be positive';
-
-// Multiple negative
-$array = [
-  'first' => 'aaa',
-  'second' => 'bbb',
-];
-if($filter->validate($array)) $issues[] = 'Multiple - Should be negative';
 
 // Reset
 $filter = new TinyFilters();
@@ -49,8 +41,11 @@ $array = [
   'third' => false,
   'fourth' => ['an' => 'array']
 ];
+#var_dump($filter->validate($array));
 if(!$filter->validate($array)) $issues[] = 'Exists';
 $filter->reset();
+
+
 
 // Equals
 $filter->add('first', 'equals', 'aaa');
@@ -200,7 +195,8 @@ $array = [
 if(!$filter->validate($array)) $issues[] = 'Custom validators';
 
 $filter->reset();
-*/
+
+
 
 // Nested
 $filter = new TinyFilters();
@@ -223,5 +219,6 @@ foreach($pages as $page => $array) {
 if(!isset($pages['home']) || isset($pages['about'])) $issues[] = 'Associative';
 
 $filter->reset();
+
 
 print_r($issues);
