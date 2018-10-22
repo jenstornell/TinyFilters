@@ -7,27 +7,32 @@ class TinyFilters {
     $this->validators['default'] = new TinyValidators();
   }
   function validate($array) {
+    $result = false;
     if(isset($this->settings)) {
       foreach($this->settings as $key => $items) {
-        foreach($items as $args) {
-          $validator_name = $this->validator($args);
-          $positive = $this->positive($validator_name, $args);
+        foreach($items as $settings) {
+          $vname = $this->validator($settings);
 
-          if(!$this->validators['default']->has($array, $key)) continue;
+          if(!$this->validators['default']->has($key, $array)) {
+            $result = $this->invert($result, $vname, $settings);
+            continue;
+          }
           
           foreach($this->validators as $validator) {
-            if(!method_exists($validator, $validator_name)) continue;
+            if(!method_exists($validator, $vname)) continue;
 
-            $result = $validator->{$validator_name}($array[$key], $args['args']);
-            $result = $positive ? $result : !$result;
+            $result = $validator->{$vname}($array[$key], $settings['args']);
           }
 
-          if(!$result) return false;
+          $result = $this->invert($result, $vname, $settings);
         }
       }
-      return !isset($result) ? false : true;
     }
-    return false;
+    return $result;
+  }
+
+  function invert($result, $vname, $settings) {
+    return $this->positive($vname, $settings) ? $result : !$result;
   }
 
   function addValidators($object) {
@@ -39,7 +44,7 @@ class TinyFilters {
   }
 
   function positive($validator, $args) {
-    return ($validator == $args['validator']);
+    return $validator === $args['validator'];
   }
 
   function add($key, $validator = null, $args = null) {

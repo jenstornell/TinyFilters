@@ -1,5 +1,6 @@
 <?php
 $issues = [];
+/*
 
 // Multiple
 // Multiple keys
@@ -35,17 +36,6 @@ if($filter->validate($array)) $issues[] = 'Reset';
 
 // VALIDATORS
 $filter = new TinyFilters();
-
-// Has
-/*$filter->add('first', 'has');
-$filter->add('second', 'has');
-//$filter->add('third', '!has');
-$array = [
-  'first' => 'aaa',
-  'second' => null,
-];
-if(!$filter->validate($array)) $issues[] = 'Has';
-$filter->reset();*/
 
 // Exists
 $filter->add('first', 'exists');
@@ -210,8 +200,10 @@ $array = [
 if(!$filter->validate($array)) $issues[] = 'Custom validators';
 
 $filter->reset();
+*/
 
 // Nested
+$filter = new TinyFilters();
 $filter->add('root', '!equals', true);
 
 $pages = [

@@ -1,7 +1,7 @@
 <?php
 class TinyValidators {
-  function has($array, $key) {
-    return !is_array($array) ? false : array_key_exists($key, $array);
+  function has($key, $array) {
+    return is_array($array) ? array_key_exists($key, $array) : false;
   }
   function exists($value) {
     return $value !== null;
