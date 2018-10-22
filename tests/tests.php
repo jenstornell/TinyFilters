@@ -153,6 +153,17 @@ $array = [
 if(!$filter->validate($array)) $issues[] = 'between';
 $filter->reset();
 
+// true
+$filter->add('first', 'returnTrue');
+
+$array = [
+  'first' => true,
+  'second' => 100,
+  'third' => 200,
+];
+if(!$filter->validate($array)) $issues[] = 'true';
+$filter->reset();
+
 // in
 $filter->add('first', '!in', 'hello');
 $filter->add('second', 'in', 'hello');
