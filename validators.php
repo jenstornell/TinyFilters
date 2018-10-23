@@ -11,7 +11,7 @@ class TinyValidators {
   function isString($value) {
     return is_string($value);
   }
-  function isNumber($value) {
+  function isInteger($value) {
     return gettype($value) === 'integer';
   }
 

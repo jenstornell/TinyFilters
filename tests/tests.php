@@ -42,7 +42,7 @@ $array = [
   'third' => false,
   'fourth' => ['an' => 'array']
 ];
-#var_dump($filter->validate($array));
+
 if(!$filter->validate($array)) $issues[] = 'Exists';
 
 // Equals
@@ -85,19 +85,19 @@ $array = [
 ];
 if(!$filter->validate($array)) $issues[] = 'isArray';
 
-// isNumber
-$filter->add('first', 'isNumber');
-$filter->add('second', 'isNumber');
-$filter->add('third', '!isNumber');
-$filter->add('fourth', '!isNumber');
-$filter->add('fifth', '!isNumber');
+// isInteger
+$filter->add('first', 'isInteger');
+$filter->add('second', 'isInteger');
+$filter->add('third', '!isInteger');
+$filter->add('fourth', '!isInteger');
+$filter->add('fifth', '!isInteger');
 $array = [
   'first' => 42,
   'second' => 0,
   'third' => false,
   'fourth' => null,
 ];
-if(!$filter->validate($array)) $issues[] = 'isNumber';
+if(!$filter->validate($array)) $issues[] = 'isInteger';
 
 // max
 $filter->add('first', 'max', 100);
@@ -182,8 +182,6 @@ $array = [
 ];
 
 if(!$filter->validate($array)) $issues[] = 'Custom validators';
-
-
 
 // Nested
 $filter = new TinyFilters();

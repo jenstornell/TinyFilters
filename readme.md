@@ -118,12 +118,12 @@ $filter->add('my_key', 'isString');
 $array['my_key'] = 'hello';
 ```
 
-### isNumber
+### isInteger
 
 It will return `true` if the value is a number and an integer.
 
 ```php
-$filter->add('my_key', 'isNumber');
+$filter->add('my_key', 'isInteger');
 
 $array['my_key'] = 100;
 ```

@@ -5,7 +5,9 @@ class TinyFilters {
   public $results;
 
   function __construct() {
-    $this->validators['default'] = new TinyValidators();
+    if(class_exists('TinyValidators')) {
+      $this->validators['default'] = new TinyValidators();
+    }
   }
   function validate($array) {
     if(empty($this->settings)) return true;
@@ -37,8 +39,10 @@ class TinyFilters {
   }
 
   function validated($value, $vname, $args) {
-    foreach($this->validators as $validator) {
-      if(method_exists($validator, $vname)) return $validator->{$vname}($value, $args);
+    if(!empty($this->validators)) {
+      foreach($this->validators as $validator) {
+        if(method_exists($validator, $vname)) return $validator->{$vname}($value, $args);
+      }
     }
   }
 
