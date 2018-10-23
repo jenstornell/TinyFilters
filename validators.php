@@ -1,8 +1,5 @@
 <?php
 class TinyValidators {
-  function has($key, $array) {
-    return is_array($array) ? array_key_exists($key, $array) : false;
-  }
   function exists($value) {
     return $value !== null;
   }
@@ -24,11 +21,6 @@ class TinyValidators {
   }
   function min($value, $match) {
     return !is_numeric($value) ? false : (int)$value >= $match;
-  }
-
-  // Returns true
-  function returnTrue() {
-    return true;
   }
 
   // In array

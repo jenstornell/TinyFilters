@@ -2,31 +2,48 @@
 class TinyFilters {
   public $settings;
   public $validators;
+  public $results;
 
   function __construct() {
     $this->validators['default'] = new TinyValidators();
   }
   function validate($array) {
-    $result = false;
-    if(isset($this->settings)) {
-      foreach($this->settings as $key => $items) {
-        foreach($items as $settings) {
-          if($this->validators['default']->has($key, $array, $settings['positive'])) {
-            foreach($this->validators as $validator) {
-              if(method_exists($validator, $settings['vname'])) {
-                $result = $validator->{$settings['vname']}($array[$key], $settings['args']);
-              }
-            } 
-          }
-          return $this->invert($result, $settings);
-        }
-      }
+    if(empty($this->settings)) return true;
+
+    foreach($this->settings as $this->key => $items) {
+        $this->item($items, $this->key, $array);
     }
+
+    $result = $this->result();
+    unset($this->results);
     return $result;
   }
 
-  function invert($result, $settings) {
-    return $settings['positive'] ? $result : !$result;
+  function item($settings, $key, $array) {
+    foreach($settings as $params) {
+      if(!array_key_exists($key, $array)) {
+        $validated = false;
+      } else {
+        $validated = $this->validated($array[$key], $params['vname'], $params['args']);
+      }
+      $this->results[] = $this->invert($validated, $params['positive']);
+    }
+  }
+
+  function result() {
+    $result = in_array(false, $this->results) ? false : true;
+    unset($this->settings);
+    return $result;
+  }
+
+  function validated($value, $vname, $args) {
+    foreach($this->validators as $validator) {
+      if(method_exists($validator, $vname)) return $validator->{$vname}($value, $args);
+    }
+  }
+
+  function invert($result, $positive) {
+    return $positive ? $result : !$result;
   }
 
   function addValidators($object) {
@@ -43,10 +60,6 @@ class TinyFilters {
 
   function add($key, $validator = null, $args = null) {
     if(is_string($key)) $this->addSingle($key, $validator, $args);
-  }
-
-  function reset() {
-    unset($this->settings);
   }
 
   function addSingle($key, $validator, $args) {

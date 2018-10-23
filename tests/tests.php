@@ -1,6 +1,16 @@
 <?php
 $issues = [];
 
+$filter = new TinyFilters();
+
+// Equals2
+$filter->add('first', '!equals', 'true');
+$filter->add('second', '!equals', false);
+$array = [
+  'first' => 'false',
+];
+if(!$filter->validate($array)) $issues[] = 'Equals';
+
 // Multiple
 // Multiple keys
 $filter = new TinyFilters();
@@ -16,15 +26,6 @@ $array = [
 ];
 
 if(!$filter->validate($array)) $issues[] = 'Multiple - Should be positive';
-
-// Reset
-$filter = new TinyFilters();
-$filter->add('first', 'isString');
-$filter->reset();
-$array = [
-  'first' => 'aaa',
-];
-if($filter->validate($array)) $issues[] = 'Reset';
 
 // VALIDATORS
 $filter = new TinyFilters();
@@ -43,16 +44,13 @@ $array = [
 ];
 #var_dump($filter->validate($array));
 if(!$filter->validate($array)) $issues[] = 'Exists';
-$filter->reset();
-
-
 
 // Equals
 $filter->add('first', 'equals', 'aaa');
 $filter->add('second', '!equals', 'bbb');
 $filter->add('third', 'equals', false);
 $filter->add('fourth', 'equals', null);
-$filter->add('fifth', 'equals', null);
+$filter->add('fifth', '!equals', null);
 $array = [
   'first' => 'aaa',
   'second' => 'ccc',
@@ -60,7 +58,6 @@ $array = [
   'fourth' => null,
 ];
 if(!$filter->validate($array)) $issues[] = 'Equals';
-$filter->reset();
 
 // isString
 $filter->add('first', 'isString');
@@ -75,7 +72,6 @@ $array = [
   'fourth' => null,
 ];
 if(!$filter->validate($array)) $issues[] = 'isString';
-$filter->reset();
 
 // isArray
 $filter->add('first', 'isArray');
@@ -88,7 +84,6 @@ $array = [
   'third' => false,
 ];
 if(!$filter->validate($array)) $issues[] = 'isArray';
-$filter->reset();
 
 // isNumber
 $filter->add('first', 'isNumber');
@@ -103,7 +98,6 @@ $array = [
   'fourth' => null,
 ];
 if(!$filter->validate($array)) $issues[] = 'isNumber';
-$filter->reset();
 
 // max
 $filter->add('first', 'max', 100);
@@ -118,7 +112,6 @@ $array = [
   'fourth' => 'string',
 ];
 if(!$filter->validate($array)) $issues[] = 'max';
-$filter->reset();
 
 // min
 $filter->add('first', 'min', 100);
@@ -133,7 +126,6 @@ $array = [
   'fourth' => 'string',
 ];
 if(!$filter->validate($array)) $issues[] = 'min';
-$filter->reset();
 
 // between
 $filter->add('first', 'between', [100, 200]);
@@ -151,18 +143,6 @@ $array = [
   'sixth' => false,
 ];
 if(!$filter->validate($array)) $issues[] = 'between';
-$filter->reset();
-
-// true
-$filter->add('first', 'returnTrue');
-
-$array = [
-  'first' => true,
-  'second' => 100,
-  'third' => 200,
-];
-if(!$filter->validate($array)) $issues[] = 'true';
-$filter->reset();
 
 // in
 $filter->add('first', '!in', 'hello');
@@ -174,7 +154,6 @@ $array = [
   'third' => ['something', 'else'],
 ];
 if(!$filter->validate($array)) $issues[] = 'in';
-$filter->reset();
 
 // Contains
 $filter->add('first', 'contains', 'ello');
@@ -186,7 +165,6 @@ $array = [
   'third' => 'world',
 ];
 if(!$filter->validate($array)) $issues[] = 'contains';
-$filter->reset();
 
 // Custom Validators
 class CustomValidators {
@@ -204,8 +182,6 @@ $array = [
 ];
 
 if(!$filter->validate($array)) $issues[] = 'Custom validators';
-
-$filter->reset();
 
 
 
@@ -228,8 +204,5 @@ foreach($pages as $page => $array) {
 }
 
 if(!isset($pages['home']) || isset($pages['about'])) $issues[] = 'Associative';
-
-$filter->reset();
-
 
 print_r($issues);
