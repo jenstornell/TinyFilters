@@ -1,6 +1,6 @@
 # TinyFilters
 
-*Version: 1.0*
+*Version: 1.1 - [Changelog](changelog.md)*
 
 TinyFilters is perhaps the smallest PHP filter library on earth. Still packed with features.
 

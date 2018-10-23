@@ -7,12 +7,27 @@ class TinyValidators {
     return $value === $match;
   }
 
-  // Is
+  // Is type
   function isString($value) {
     return is_string($value);
   }
   function isInteger($value) {
-    return gettype($value) === 'integer';
+    return is_int($value);
+  }
+  function isNumeric($value) {
+    return is_numeric($value);
+  }
+  function isFloat($value) {
+    return is_float($value);
+  }
+  function isArray($value) {
+    return is_array($value);
+  }
+  function isObject($value) {
+    return is_object($value);
+  }
+  function isBoolean($value) {
+    return is_boolean($value);
   }
 
   // Max min
@@ -27,11 +42,6 @@ class TinyValidators {
   function in($value, $match) {
     if(!$this->isArray($value)) return false;
     return in_array($match, $value);
-  }
-
-  // Is array
-  function isArray($value) {
-    return is_array($value);
   }
 
   // Contains
